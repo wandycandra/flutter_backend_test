@@ -10,12 +10,11 @@ use Illuminate\Http\Client\Request;
 class AuthController extends Controller
 {
 
-    public function register(Request $request){
-        print $request;
+    public function register(){
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => bcrypt(request('password')),
           ]);
 
           return response()->json([
@@ -30,7 +29,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     /**
@@ -46,7 +45,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized dude'], 401);
         }
 
-        return Auth::user();
+        return Auth::user()->getEmail();
     }
 
     /**
