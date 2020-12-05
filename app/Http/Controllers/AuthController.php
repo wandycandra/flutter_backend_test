@@ -19,7 +19,6 @@ class AuthController extends Controller
 
           return response()->json([
               'status' => 'ok',
-              'data' => $user
           ],200);
     }
     /**
@@ -45,7 +44,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized dude'], 401);
         }
 
-        return Auth::user()->getEmail();
+        return Auth::user();
     }
 
     /**
